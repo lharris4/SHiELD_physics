@@ -857,7 +857,7 @@ module GFS_typedefs
     !--- debug flag
     logical              :: debug
     logical              :: pre_rad         !< flag for testing purpose
-    logical              :: do_ocean        !< flag for slab ocean model 
+    logical              :: do_ocean        !< flag for slab ocean model
     logical              :: use_ifs_ini_sst !< only work when "ecmwf_ic = .T."
     logical              :: use_ext_sst     !< flag for using external SST forcing (or any external SST dataset, passed from the dynamics or nudging)
 
@@ -2447,8 +2447,8 @@ end subroutine overrides_create
     logical              :: lprnt          = .false.
     !logical              :: landseaprt     = .true. !moved to being a public module variable, for convenience
     logical              :: pre_rad        = .false.         !< flag for testing purpose
-    logical              :: do_ocean       = .false.         !< flag for slab ocean model 
-    logical              :: use_ifs_ini_sst= .false.         !< only work when "ecmwf_ic = .T. 
+    logical              :: do_ocean       = .false.         !< flag for slab ocean model
+    logical              :: use_ifs_ini_sst= .false.         !< only work when "ecmwf_ic = .T.
     logical              :: use_ext_sst    = .false.         !< flag for using external SST forcing (or any external SST dataset, passed from the dynamics or nudging)
 
 !--- aerosol scavenging factors
@@ -3133,7 +3133,35 @@ end subroutine overrides_create
         endif
         print *,' cs_parm=',Model%cs_parm,' nctp=',Model%nctp
       endif
-      if (.not. Model%old_monin .and. .not. Model%do_shoc) print *,' New PBL scheme used'
+      if (Model%do_shoc) then
+         print*, ' SHOC PBL Scheme used'
+      elseif ( Model%no_pbl ) then
+         print*, ' PBL scheme disabled'
+      elseif (Model%hybedmf) then
+         print*, ' Hybrid EDMF (GFSv15) used'
+      elseif (Model%satmedmf) then
+         if (Model%isatmedmf == 0) then
+            print*, ' Prototype TKE-EDMF PBL used with non-local mixing'
+         elseif (Model%isatmedmf == 1) then
+            print*, ' GFSv16 TKE-EDMF PBL used with non-local mixing'
+         else
+            print*, ' isatmedmf ***undefined***'
+         endif
+      elseif (Model%ysupbl) then
+         print*, ' Yonsei University (YSU) PBL used'
+      elseif ( Model%myj_pbl) then
+         print*, ' Mellor-Yamada-Janjic (MYJ) PBL used'
+      elseif (.not. Model%old_monin) then
+         print*, ' Han & Pan MRF PBL used'
+      else
+         if (Model%mstrat) then
+            print*, ' Hong & Pan MRF PBL with Moorthi stratus used'
+         else
+            print*, ' Hong & Pan MRF PBL used'
+         endif
+      endif
+
+      !if (.not. Model%old_monin .and. .not. Model%do_shoc) print *,' New PBL scheme used'
       if (.not. Model%shal_cnv) then
         Model%imfshalcnv = -1
         print *,' No shallow convection used'
