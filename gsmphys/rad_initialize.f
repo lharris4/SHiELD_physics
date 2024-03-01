@@ -2,16 +2,10 @@
       subroutine rad_initialize                                         &
 !...................................
 !  ---  inputs:
-<<<<<<< HEAD
-     &     ( si,levr,ictm,isol,ico2,fco2_scaling,iaer,ialb,iems,ntcw,   &
-     &       num_p2d,num_p3d,npdf3d,ntoz,iovr_sw,iovr_lw,isubc_sw,      &
-     &       isubc_lw,crick_proof,ccnorm,norad_precip,                  &
-=======
      &     ( si,levr,ictm,isol,ico2,fco2_scaling,iaer,ialb,             &
      &       disable_radiation_quasi_sea_ice,iems,ntcw, num_p2d,        &
      &       num_p3d,npdf3d,ntoz,iovr_sw,iovr_lw,isubc_sw,isubc_lw,     &
      &       crick_proof,ccnorm,norad_precip,                           &
->>>>>>> 5e5e100 (Modifications required for running with a global slab ocean (#40))
      &       idate,iflip,me )
 !  ---  outputs: ( none )
 
@@ -126,7 +120,7 @@
      &       ntcw, ialb, iems, num_p3d, npdf3d, ntoz, iovr_sw, iovr_lw, &
      &       isubc_sw, isubc_lw, iflip, me, idate(4)
 
-      real (kind=kind_phys), intent(in) :: si(levr+1), fco2_scaling 
+      real (kind=kind_phys), intent(in) :: si(levr+1), fco2_scaling
 
       logical, intent(in) :: crick_proof, ccnorm, norad_precip,         &
      &                       disable_radiation_quasi_sea_ice
@@ -149,7 +143,7 @@
       if ( ictm==0 .or. ictm==-2 ) then
         iaerflg = mod(iaer, 100)        ! no volcanic aerosols for clim hindcast
       else
-        iaerflg = mod(iaer, 1000)   
+        iaerflg = mod(iaer, 1000)
       endif
       laswflg= (mod(iaerflg,10) > 0)    ! control flag for sw tropospheric aerosol
       lalwflg= (mod(iaerflg/10,10) > 0) ! control flag for lw tropospheric aerosol

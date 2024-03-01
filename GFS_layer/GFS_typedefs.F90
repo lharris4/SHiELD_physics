@@ -523,7 +523,7 @@ module GFS_typedefs
                                             !< radiation code treating ocean grid
                                             !< cells with temperature below
                                             !< freezing as sea ice
-    
+
     integer              :: iems            !< use fixed value of 1.0
     integer              :: iaer            !< default aerosol effect in sw only
     integer              :: iovr_sw         !< sw: max-random overlap clouds
