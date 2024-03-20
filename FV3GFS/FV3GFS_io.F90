@@ -159,6 +159,7 @@ module FV3GFS_io_mod
 
   character(len=64) :: AREA_WEIGHTED = 'area_weighted'
   character(len=64) :: MASKED_AREA_WEIGHTED = 'masked_area_weighted'
+  character(len=64) :: COSP_MASKED_AREA_WEIGHTED = 'cosp_masked_area_weighted'
   character(len=64) :: MASS_WEIGHTED = 'mass_weighted'
   character(len=64) :: MODE = 'mode'
 
@@ -5062,6 +5063,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltisccp(:)
@@ -5074,6 +5076,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%meantbisccp(:)
@@ -5086,6 +5089,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%meantbclrisccp(:)
@@ -5098,6 +5102,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'hPa'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%pctisccp(:)
@@ -5110,6 +5115,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tauisccp(:)
@@ -5122,6 +5128,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%albisccp(:)
@@ -5134,6 +5141,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%misr_meanztop(:)
@@ -5146,6 +5154,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%misr_cldarea(:)
@@ -5158,6 +5167,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltmodis(:)
@@ -5170,6 +5180,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clwmodis(:)
@@ -5182,6 +5193,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%climodis(:)
@@ -5194,6 +5206,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhmodis(:)
@@ -5206,6 +5219,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmmodis(:)
@@ -5218,6 +5232,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllmodis(:)
@@ -5230,6 +5245,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tautmodis(:)
@@ -5242,6 +5258,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tauwmodis(:)
@@ -5254,6 +5271,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tauimodis(:)
@@ -5266,6 +5284,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tautlogmodis(:)
@@ -5278,6 +5297,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tauwlogmodis(:)
@@ -5290,6 +5310,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%tauilogmodis(:)
@@ -5302,6 +5323,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%reffclwmodis(:)
@@ -5314,6 +5336,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%reffclimodis(:)
@@ -5326,6 +5349,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'hPa'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%pctmodis(:)
@@ -5338,6 +5362,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg m-2'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%lwpmodis(:)
@@ -5350,6 +5375,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg m-2'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%iwpmodis(:)
@@ -5362,6 +5388,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltlidarradar(:)
@@ -5374,6 +5401,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllcalipsoice(:)
@@ -5386,6 +5414,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmcalipsoice(:)
@@ -5398,6 +5427,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhcalipsoice(:)
@@ -5410,6 +5440,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltcalipsoice(:)
@@ -5422,6 +5453,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllcalipsoliq(:)
@@ -5434,6 +5466,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmcalipsoliq(:)
@@ -5446,6 +5479,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhcalipsoliq(:)
@@ -5458,6 +5492,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltcalipsoliq(:)
@@ -5470,6 +5505,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllcalipsoun(:)
@@ -5482,6 +5518,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmcalipsoun(:)
@@ -5494,6 +5531,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhcalipsoun(:)
@@ -5506,6 +5544,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltcalipsoun(:)
@@ -5518,6 +5557,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllcalipso(:)
@@ -5530,6 +5570,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmcalipso(:)
@@ -5542,7 +5583,9 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhcalipso(:)
@@ -5555,6 +5598,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltcalipso(:)
@@ -5567,6 +5611,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clopaquecalipso(:)
@@ -5579,6 +5624,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clthincalipso(:)
@@ -5591,6 +5637,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clzopaquecalipso(:)
@@ -5603,6 +5650,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clopaquetemp(:)
@@ -5615,6 +5663,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clthintemp(:)
@@ -5627,6 +5676,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clzopaquetemp(:)
@@ -5639,6 +5689,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clopaquemeanz(:)
@@ -5651,6 +5702,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clthinmeanz(:)
@@ -5663,6 +5715,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clthinemis(:)
@@ -5675,6 +5728,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clopaquemeanzse(:)
@@ -5687,6 +5741,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clthinmeanzse(:)
@@ -5699,6 +5754,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clzopaquecalipsose(:)
@@ -5711,6 +5767,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllgrLidar532(:)
@@ -5723,6 +5780,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmgrLidar532(:)
@@ -5735,6 +5793,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhgrLidar532(:)
@@ -5747,6 +5806,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltgrLidar532(:)
@@ -5759,6 +5819,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cllatlid(:)
@@ -5771,6 +5832,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clmatlid(:)
@@ -5783,6 +5845,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clhatlid(:)
@@ -5795,6 +5858,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cltatlid(:)
@@ -5807,6 +5871,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag0(:)
@@ -5819,6 +5884,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag1(:)
@@ -5831,6 +5897,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag2(:)
@@ -5843,6 +5910,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag3(:)
@@ -5855,6 +5923,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag4(:)
@@ -5867,6 +5936,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag5(:)
@@ -5879,6 +5949,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag6(:)
@@ -5891,6 +5962,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag7(:)
@@ -5903,6 +5975,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag8(:)
@@ -5915,6 +5988,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%ptcloudsatflag9(:)
@@ -5927,6 +6001,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cloudsatpia(:)
@@ -5939,6 +6014,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cloudsat_tcc(:)
@@ -5951,6 +6027,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '%'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%cloudsat_tcc2(:)
@@ -5963,6 +6040,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%npdfcld(:)
@@ -5975,6 +6053,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%npdfdrz(:)
@@ -5987,6 +6066,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%npdfrain(:)
@@ -6003,6 +6083,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%skt(:)
@@ -6015,6 +6096,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%surfelev(:)
@@ -6027,6 +6109,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '0/1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%landmask(:)
@@ -6039,6 +6122,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'none'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%sunlit(:)
@@ -6051,6 +6135,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'pa'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%p(:,:)
@@ -6063,6 +6148,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'pa'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%ph(:,:)
@@ -6075,6 +6161,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%zlev(:,:)
@@ -6087,6 +6174,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%zlev_half(:,:)
@@ -6099,6 +6187,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'K'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%T(:,:)
@@ -6111,6 +6200,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%sh(:,:)
@@ -6123,6 +6213,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%tca(:,:)
@@ -6135,6 +6226,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%cca(:,:)
@@ -6147,6 +6239,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%u_wind(:,:)
@@ -6159,6 +6252,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%v_wind(:,:)
@@ -6171,6 +6265,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%mr_lsliq(:,:)
@@ -6183,6 +6278,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%mr_lsice(:,:)
@@ -6195,6 +6291,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%mr_ccliq(:,:)
@@ -6207,6 +6304,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%mr_ccice(:,:)
@@ -6219,6 +6317,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/kg'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%mr_ozone(:,:)
@@ -6231,6 +6330,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/m^2/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%fl_lsrain(:,:)
@@ -6243,6 +6343,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/m^2/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%fl_lssnow(:,:)
@@ -6255,6 +6356,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/m^2/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%fl_lsgrpl(:,:)
@@ -6267,6 +6369,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/m^2/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%fl_ccrain(:,:)
@@ -6279,6 +6382,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'kg/m^2/s'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%fl_ccsnow(:,:)
@@ -6291,6 +6395,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%dtau_s(:,:)
@@ -6303,6 +6408,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = '1'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%dtau_c(:,:)
@@ -6315,6 +6421,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'none'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%dem_s(:,:)
@@ -6327,6 +6434,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'none'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%dem_c(:,:)
@@ -6339,6 +6447,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%Reff_LSCLIQ(:,:)
@@ -6351,6 +6460,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%Reff_LSCICE(:,:)
@@ -6363,6 +6473,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%Reff_LSRAIN(:,:)
@@ -6375,6 +6486,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%Reff_LSSNOW(:,:)
@@ -6387,6 +6499,7 @@ module FV3GFS_io_mod
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'cosp'
     Diag(idx)%missing_value = COSP_missing_value
+    Diag(idx)%coarse_graining_method = COSP_MASKED_AREA_WEIGHTED
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var3 => Gfs_diag(nb)%cosp%Reff_LSGRPL(:,:)
@@ -7299,6 +7412,7 @@ module FV3GFS_io_mod
     coarse_diagnostic%axes = diagnostic%axes
     coarse_diagnostic%time_avg = diagnostic%time_avg
     coarse_diagnostic%mod_name = diagnostic%mod_name
+    coarse_diagnostic%missing_value = diagnostic%missing_value
     coarse_diagnostic%name = trim(diagnostic%name) // '_coarse'
     coarse_diagnostic%desc = diagnostic%desc
     coarse_diagnostic%unit = diagnostic%unit
@@ -7318,7 +7432,7 @@ module FV3GFS_io_mod
        Diag_coarse(index)%id = register_diag_field( &
             trim(Diag_coarse(index)%mod_name), trim(Diag_coarse(index)%name),  &
             coarse_axes(1:Diag_coarse(index)%axes), Time, trim(Diag_coarse(index)%desc), &
-            trim(Diag_coarse(index)%unit), missing_value=real(missing_value))
+            trim(Diag_coarse(index)%unit), missing_value=real(Diag(index)%missing_value))
     enddo
   end subroutine fv3gfs_diag_register_coarse
 
@@ -7334,7 +7448,7 @@ module FV3GFS_io_mod
        Diag_diag_manager_controlled_coarse(index)%id = register_diag_field( &
             trim(Diag_diag_manager_controlled_coarse(index)%mod_name), trim(Diag_diag_manager_controlled_coarse(index)%name),  &
             coarse_axes(1:Diag_diag_manager_controlled_coarse(index)%axes), Time, trim(Diag_diag_manager_controlled_coarse(index)%desc), &
-            trim(Diag_diag_manager_controlled_coarse(index)%unit), missing_value=real(missing_value))
+            trim(Diag_diag_manager_controlled_coarse(index)%unit), missing_value=real(Diag(index)%missing_value))
     enddo
   end subroutine register_coarse_diag_manager_controlled_diagnostics
 
@@ -7672,19 +7786,25 @@ module FV3GFS_io_mod
            select case (trim(Diag(idx)%name))
            case('totprcpb_ave')
               call prt_gb_nh_sh_us('Total Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, one, 86400.)
-              call prt_gb_nh_sh_us('Land Precip  (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 86400.)
-              call prt_gb_nh_sh_us('Ocean Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, seamask, 86400.)
-              call prt_gb_nh_sh_us('SeaIce Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 86400.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land Precip  (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 86400.)
+                 call prt_gb_nh_sh_us('Ocean Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, seamask, 86400.)
+                 call prt_gb_nh_sh_us('SeaIce Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 86400.)
+              endif
            case('cnvprcpb_ave')
               call prt_gb_nh_sh_us('Total Convective Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, one, 86400.)
-              call prt_gb_nh_sh_us('Land Convective Precip  (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 86400.)
-              call prt_gb_nh_sh_us('Ocean Convective Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, seamask, 86400.)
-              call prt_gb_nh_sh_us('SeaIce Convective Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 86400.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land Convective Precip  (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 86400.)
+                 call prt_gb_nh_sh_us('Ocean Convective Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, seamask, 86400.)
+                 call prt_gb_nh_sh_us('SeaIce Convective Precip (mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 86400.)
+              endif
            case('totsnwb_ave')
-              call prt_gb_nh_sh_us('Total Snowfall (9:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, one, 777600.)
-              call prt_gb_nh_sh_us('Land Snowfall  (9:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 777600.)
-              call prt_gb_nh_sh_us('Ocean Snowfall (9:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, seamask, 777600.)
-              call prt_gb_nh_sh_us('SeaIce Snowfall (9:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 777600.)
+              call prt_gb_nh_sh_us('Total Snowfall (9:1) mm/d', 1, nx, 1, ny, var2, area, lon, lat, one, 777600.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land Snowfall  (9:1) mm/d', 1, nx, 1, ny, var2, area, lon, lat, landmask, 777600.)
+                 call prt_gb_nh_sh_us('Ocean Snowfall (9:1) mm/d', 1, nx, 1, ny, var2, area, lon, lat, seamask, 777600.)
+                 call prt_gb_nh_sh_us('SeaIce Snowfall (9:1) mm/d', 1, nx, 1, ny, var2, area, lon, lat, icemask, 777600.)
+              endif
 !           case('totgrp') ! Tiny??
 !              call prt_gb_nh_sh_us('Total Icefall (2:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, one, 172800.)
 !              call prt_gb_nh_sh_us('Land Icefall  (2:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, landmask, 172800.)
@@ -7692,35 +7812,59 @@ module FV3GFS_io_mod
 !              call prt_gb_nh_sh_us('SeaIce Icefall (2:1 mm/d)', 1, nx, 1, ny, var2, area, lon, lat, icemask, 172800.)
            case('lhtfl_ave')
               call prt_gb_nh_sh_us('Total sfc LH flux ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
-              call prt_gb_nh_sh_us('Land sfc LH flux  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-              call prt_gb_nh_sh_us('Ocean sfc LH flux ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-              call prt_gb_nh_sh_us('SeaIce sfc LH flux ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land sfc LH flux  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
+                 call prt_gb_nh_sh_us('Ocean sfc LH flux ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
+                 call prt_gb_nh_sh_us('SeaIce sfc LH flux ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              endif
            case('shtfl_ave')
               call prt_gb_nh_sh_us('Total sfc SH flux ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
-              call prt_gb_nh_sh_us('Land sfc SH flux  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-              call prt_gb_nh_sh_us('Ocean sfc SH flux ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-              call prt_gb_nh_sh_us('SeaIce sfc SH flux ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land sfc SH flux  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
+                 call prt_gb_nh_sh_us('Ocean sfc SH flux ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
+                 call prt_gb_nh_sh_us('SeaIce sfc SH flux ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              endif
            case('hpbl')
               call prt_gb_nh_sh_us('Total pbl height ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
-              call prt_gb_nh_sh_us('Land pbl height  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-              call prt_gb_nh_sh_us('Ocean pbl height ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-              call prt_gb_nh_sh_us('SeaIce pbl height ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land pbl height  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
+                 call prt_gb_nh_sh_us('Ocean pbl height ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
+                 call prt_gb_nh_sh_us('SeaIce pbl height ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              endif
            case('dusfc')
-              call prt_gb_nh_sh_us('Total u-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
-              call prt_gb_nh_sh_us('Land u-wind stress  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-              call prt_gb_nh_sh_us('Ocean u-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-              call prt_gb_nh_sh_us('SeaIce u-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              call prt_gb_nh_sh_us('Total u-stress mN/m**2 ', 1, nx, 1, ny, var2, area, lon, lat, one, 1000.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land u-stress mN/m**2 ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1000.)
+                 call prt_gb_nh_sh_us('Ocean u-stress mN/m**2', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1000.)
+                 call prt_gb_nh_sh_us('SeaIce u-stress mN/m**2', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1000.)
+              endif
            case('dvsfc')
-              call prt_gb_nh_sh_us('Total v-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
-              call prt_gb_nh_sh_us('Land v-wind stress  ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-              call prt_gb_nh_sh_us('Ocean v-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-              call prt_gb_nh_sh_us('SeaIce v-wind stress ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+              call prt_gb_nh_sh_us('Total v-stress mN/m**2', 1, nx, 1, ny, var2, area, lon, lat, one, 1000.)
+              if (landseaprt) then
+                 call prt_gb_nh_sh_us('Land v-stress mN/m**2 ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1000.)
+                 call prt_gb_nh_sh_us('Ocean v-stress mN/m**2', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1000.)
+                 call prt_gb_nh_sh_us('SeaIce v-stress mN/m**2', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1000.)
+              endif
            case('DSWRFtoa')
-              call prt_gb_nh_sh_us('TOA SW down ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+              call prt_gb_nh_sh_us('TOA SW dn ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
            case('USWRFtoa')
               call prt_gb_nh_sh_us('TOA SW up ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
            case('ULWRFtoa')
               call prt_gb_nh_sh_us('TOA LW up ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('DSWRFsfc')
+              call prt_gb_nh_sh_us('SFC SW dn ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('DLWRFsfc')
+              call prt_gb_nh_sh_us('SFC LW dn ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('USWRFsfc')
+              call prt_gb_nh_sh_us('SFC SW up ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('ULWRFsfc')
+              call prt_gb_nh_sh_us('SFC LW up ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('TCDChcl')
+              call prt_gb_nh_sh_us('High cloud % ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('TCDCmcl')
+              call prt_gb_nh_sh_us('Mid  cloud % ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+           case('TCDClcl')
+              call prt_gb_nh_sh_us('Low  cloud % ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
            case('u10m')
               call prt_gb_nh_sh_us('Total 10-m u avg ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
               if (landseaprt) then
@@ -7771,11 +7915,11 @@ module FV3GFS_io_mod
                  call prt_gb_nh_sh_us('SeaIce surface roughness ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
               endif
            case('q2m')
-              call prt_gb_nh_sh_us('Total 2-m Q avg ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
+              call prt_gb_nh_sh_us('Total 2-m Q g/kg ', 1, nx, 1, ny, var2, area, lon, lat, one, 1000.)
               if (landseaprt) then
-                 call prt_gb_nh_sh_us('Land 2-m Q avg ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1.)
-                 call prt_gb_nh_sh_us('Ocean 2-m Q avg ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1.)
-                 call prt_gb_nh_sh_us('SeaIce 2-m Q avg ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1.)
+                 call prt_gb_nh_sh_us('Land 2-m Q g/kg ', 1, nx, 1, ny, var2, area, lon, lat, landmask, 1000.)
+                 call prt_gb_nh_sh_us('Ocean 2-m Q g/kg ', 1, nx, 1, ny, var2, area, lon, lat, seamask, 1000.)
+                 call prt_gb_nh_sh_us('SeaIce 2-m Q g/kg ', 1, nx, 1, ny, var2, area, lon, lat, icemask, 1000.)
               endif
            case('t2m')
               call prt_gb_nh_sh_us('Total 2-m T avg ', 1, nx, 1, ny, var2, area, lon, lat, one, 1.)
@@ -8106,6 +8250,9 @@ module FV3GFS_io_mod
       call weighted_block_average(area, full_resolution_field, coarse)
    elseif (method .eq. MASKED_AREA_WEIGHTED) then
       call weighted_block_average(area, full_resolution_field, full_resolution_field .ne. missing_value, coarse)
+   elseif (method .eq. COSP_MASKED_AREA_WEIGHTED) then
+      call weighted_block_average(area, full_resolution_field, full_resolution_field .gt. -1.e10, coarse)
+      !call weighted_block_average(area, full_resolution_field, full_resolution_field .ne. COSP_missing_value, coarse)
    elseif (method .eq. MODE) then
       call block_mode(full_resolution_field, coarse)
    elseif (method .eq. MASS_WEIGHTED) then
