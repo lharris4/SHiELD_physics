@@ -647,6 +647,13 @@ module GFS_typedefs
     logical              :: no_pbl          !< disable PBL (for LES)
     logical              :: cap_k0_land     !< flag for applying limter on background diff in inversion layer over land in satmedmfdiff.f
     logical              :: do_dk_hb19      !< flag for using hb19 background diff formula in satmedmfdiff.f
+    logical              :: use_lup_only    !< flag for using l_up as l2 in tke-edmf pbl 
+    logical              :: use_l1_sfc      !< flag for using l1 as l at lowest layer in tke-edmf pbl
+    logical              :: use_tke_pbl     !< flag for adjusting entrainment/detrainment rate in tke-edmf 
+    logical              :: use_shear_pbl   !< flag for considering shear effect on updraft/downdraft diagnosis in tke-edmf 
+    logical              :: use_tke_conv    !< flag for adjusting entrainment/detrainment rate in conv scheme 
+    logical              :: use_shear_conv  !< flag for considering shear effect on updraft/downdraft diagnosis in conv scheme
+    logical              :: limit_shal_conv !< flag for constraining shal conv based on diagnosed cloud depth/top 
     logical              :: dspheat         !< flag for tke dissipative heating
     logical              :: lheatstrg       !< flag for canopy heat storage parameterization
     real(kind=kind_phys) :: hour_canopy     !< tunable time scale for canopy heat storage parameterization
@@ -705,6 +712,8 @@ module GFS_typedefs
     integer              :: isatmedmf       !< flag for scale-aware TKE-based moist edmf scheme
                                             !<     0: initial version of satmedmf (Nov 2018) modified by kgao at GFDL
                                             !<     1: updated version of satmedmf (May 2019) modified by kgao at GFDL
+    integer              :: l2_diag_opt     !< flag for choosing a diagnosis method for l2 in tke-edmf
+    integer              :: l1l2_blend_opt  !< flag for choosing a blending method for l1 and l2 in tke-edmf 
     logical              :: do_deep         !< whether to do deep convection
     integer              :: nmtvr           !< number of topographic variables such as variance etc
                                             !< used in the GWD parameterization
@@ -1329,6 +1338,7 @@ module GFS_typedefs
     real (kind=kind_phys), pointer :: wu2_shal(:,:) => null()
     real (kind=kind_phys), pointer :: eta_shal(:,:) => null()
     real (kind=kind_phys), pointer :: co2(:,:) => null()  ! Vertically resolved CO2 concentration
+    real (kind=kind_phys), pointer :: elm_pbl(:,:)  => null()
 
     !--- accumulated quantities for 3D diagnostics
     real (kind=kind_phys), pointer :: upd_mf (:,:)   => null()  !< instantaneous convective updraft mass flux
@@ -2273,6 +2283,13 @@ end subroutine overrides_create
     logical              :: no_pbl         = .false.                  !< disable PBL (for LES)
     logical              :: cap_k0_land    = .true.                   !< flag for applying limter on background diff in inversion
     logical              :: do_dk_hb19     = .false.                  !< flag for using hb19 formula for background diff
+    logical              :: use_lup_only   = .false.                  !< flag for using l_up as l2 
+    logical              :: use_l1_sfc     = .false.                  !< flag for using l1 as l in the lowest layer
+    logical              :: use_tke_pbl    = .false.                  !< flag for adjusting entrainment/detrainment rates in edmf
+    logical              :: use_shear_pbl  = .false.                  !< flag for considering shear effect for wu/wd in edmf 
+    logical              :: use_tke_conv   = .false.                  !< flag for adjusting entrainment/detrainment rates in conv 
+    logical              :: use_shear_conv = .false.                  !< flag for considering shear effect for wu/wd in conv
+    logical              :: limit_shal_conv= .false.                  !< flag for constraining shal conv based on diagnosed cloud depth/top 
     logical              :: dspheat        = .false.                  !< flag for tke dissipative heating
     logical              :: lheatstrg      = .false.                  !< flag for canopy heat storage parameterization
     real(kind=kind_phys) :: hour_canopy    = 0.0d0                    !< tunable time scale for canopy heat storage parameterization
@@ -2328,10 +2345,12 @@ end subroutine overrides_create
                                                                       !<     2: scale- & aerosol-aware mass-flux deep conv scheme (2017)
                                                                       !<     3: scale- & aerosol-aware mass-flux deep conv scheme (2020)
     integer              :: isatmedmf      =  0                       !< flag for scale-aware TKE-based moist edmf scheme
+    integer              :: l2_diag_opt    =  0                       !< flag for l2 diagnosis method in tke-edmf
+    integer              :: l1l2_blend_opt =  0                       !< flag for l1 and l2 blending method in tke-edmf
     logical              :: do_deep        = .true.                   !< whether to do deep convection
     integer              :: nmtvr          = 14                       !< number of topographic variables such as variance etc
                                                                       !< used in the GWD parameterization
-    integer              :: jcap           =  1              !< number of spectral wave trancation used only by sascnv shalcnv
+    integer              :: jcap           =  1                       !< number of spectral wave trancation used only by sascnv shalcnv
     real(kind=kind_phys) :: cs_parm(10) = (/5.0,2.5,1.0e3,3.0e3,20.0,-999.,-999.,0.,0.,0./)
     real(kind=kind_phys) :: flgmin(2)      = (/0.180,0.220/)          !< [in] ice fraction bounds
     real(kind=kind_phys) :: cgwf(2)        = (/0.5d0,0.05d0/)         !< multiplication factor for convective GWD
@@ -2511,10 +2530,12 @@ end subroutine overrides_create
                                ysu_brcr_ub, ysu_rlam, ysu_afac, ysu_bfac, ysu_hpbl_cr,      &
                                tnl_fac, qnl_fac, unl_fac,                                   &
                                random_clds, shal_cnv, imfshalcnv, imfdeepcnv, isatmedmf,    &
-                               do_deep, jcap,&
+                               l2_diag_opt, l1l2_blend_opt, do_deep, jcap,                  &
                                cs_parm, flgmin, cgwf, ccwf, cdmbgwd, sup, ctei_rm, crtrh,   &
                                dlqf,rbcr,mix_precip,orogwd,myj_pbl,ysupbl,satmedmf,         &
-                               cap_k0_land,do_dk_hb19,cloud_gfdl,gwd_p_crit,                &
+                               cap_k0_land,do_dk_hb19,use_lup_only,use_l1_sfc,              &
+                               use_tke_pbl,use_shear_pbl,use_tke_conv,use_shear_conv,       &
+                               limit_shal_conv,cloud_gfdl,gwd_p_crit,                       &
                           !--- Rayleigh friction
                                prslrd0, ral_ts,                                             &
                           !--- mass flux deep convection
@@ -2747,6 +2768,13 @@ end subroutine overrides_create
     Model%no_pbl           = no_pbl
     Model%cap_k0_land      = cap_k0_land
     Model%do_dk_hb19       = do_dk_hb19
+    Model%use_lup_only     = use_lup_only 
+    Model%use_l1_sfc       = use_l1_sfc
+    Model%use_tke_pbl      = use_tke_pbl
+    Model%use_shear_pbl    = use_shear_pbl
+    Model%use_tke_conv     = use_tke_conv
+    Model%use_shear_conv   = use_shear_conv
+    Model%limit_shal_conv  = limit_shal_conv 
     Model%dspheat          = dspheat
     Model%lheatstrg        = lheatstrg
     Model%hour_canopy      = hour_canopy
@@ -2791,6 +2819,8 @@ end subroutine overrides_create
     Model%imfshalcnv       = imfshalcnv
     Model%imfdeepcnv       = imfdeepcnv
     Model%isatmedmf        = isatmedmf
+    Model%l2_diag_opt      = l2_diag_opt
+    Model%l1l2_blend_opt   = l1l2_blend_opt
     Model%do_deep          = do_deep
     Model%nmtvr            = nmtvr
     Model%jcap             = jcap
@@ -3484,6 +3514,13 @@ end subroutine overrides_create
       print *, ' no_pbl            : ', Model%no_pbl
       print *, ' cap_k0_land       : ', Model%cap_k0_land
       print *, ' do_dk_hb19        : ', Model%do_dk_hb19
+      print *, ' use_lup_only      : ', Model%use_lup_only
+      print *, ' use_l1_sfc        : ', Model%use_l1_sfc
+      print *, ' use_tke_pbl       : ', Model%use_tke_pbl
+      print *, ' use_shear_pbl     : ', Model%use_shear_pbl
+      print *, ' use_tke_conv      : ', Model%use_tke_conv
+      print *, ' use_shear_conv    : ', Model%use_shear_conv
+      print *, ' limit_shal_conv   : ', Model%limit_shal_conv
       print *, ' dspheat           : ', Model%dspheat
       print *, ' lheatstrg         : ', Model%lheatstrg
       print *, ' hour_canopy       : ', Model%hour_canopy
@@ -3528,6 +3565,8 @@ end subroutine overrides_create
       print *, ' imfshalcnv        : ', Model%imfshalcnv
       print *, ' imfdeepcnv        : ', Model%imfdeepcnv
       print *, ' isatmedmf         : ', Model%isatmedmf
+      print *, ' l2_diag_opt       : ', Model%l2_diag_opt
+      print *, ' l1l2_blend_opt    : ', Model%l1l2_blend_opt
       print *, ' do_deep           : ', Model%do_deep
       print *, ' nmtvr             : ', Model%nmtvr
       print *, ' jcap              : ', Model%jcap
@@ -3988,6 +4027,7 @@ end subroutine overrides_create
       allocate (Diag%wu2_shal(IM,Model%levs))
       allocate (Diag%eta_shal(IM,Model%levs))
       allocate (Diag%co2(IM,Model%levs))
+      allocate (Diag%elm_pbl(IM,Model%levs))
 
       !--- needed to allocate GoCart coupling fields
       allocate (Diag%upd_mf (IM,Model%levs))
@@ -4274,6 +4314,7 @@ end subroutine overrides_create
       Diag%flux_en = zero
       Diag%wu2_shal= zero
       Diag%eta_shal= zero
+      Diag%elm_pbl = zero
       Diag%upd_mf  = zero
       Diag%dwn_mf  = zero
       Diag%det_mf  = zero
