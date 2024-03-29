@@ -6,6 +6,9 @@ module GFS_typedefs
        use ozne_def,                 only: levozp, oz_coeff
        use h2o_def,                  only: levh2o, h2o_coeff
        use gfdl_cld_mp_mod,          only: rhow
+#if defined (USE_COSP)
+       use MOD_COSP_CONFIG,          only: ntau, npres
+#endif
 
        implicit none
 
@@ -1061,6 +1064,7 @@ module GFS_typedefs
     real (kind=kind_phys), pointer :: pctisccp                           (:)   => null()
     real (kind=kind_phys), pointer :: tauisccp                           (:)   => null()
     real (kind=kind_phys), pointer :: albisccp                           (:)   => null()
+    real (kind=kind_phys), pointer :: clisccp                            (:,:,:) => null()
     real (kind=kind_phys), pointer :: misr_meanztop                      (:)   => null()
     real (kind=kind_phys), pointer :: misr_cldarea                       (:)   => null()
     real (kind=kind_phys), pointer :: cltmodis                           (:)   => null()
@@ -4043,6 +4047,7 @@ end subroutine overrides_create
       allocate (Diag%cosp%pctisccp                           (IM))
       allocate (Diag%cosp%tauisccp                           (IM))
       allocate (Diag%cosp%albisccp                           (IM))
+      allocate (Diag%cosp%clisccp                            (IM,NTAU,NPRES))
       allocate (Diag%cosp%misr_meanztop                      (IM))
       allocate (Diag%cosp%misr_cldarea                       (IM))
       allocate (Diag%cosp%cltmodis                           (IM))

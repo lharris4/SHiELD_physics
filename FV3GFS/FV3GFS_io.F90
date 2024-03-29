@@ -65,6 +65,10 @@ module FV3GFS_io_mod
   use coarse_graining_mod, only: vertical_remapping_requirements, get_coarse_array_bounds
   use coarse_graining_mod, only: vertically_remap_field, mask_area_weights
   use coarse_graining_mod, only: blended_area_weighted_coarse_grain_field
+
+#if defined (USE_COSP)
+  use MOD_COSP_CONFIG,     only: ntau, npres, tau_binBounds, pres_binBounds
+#endif
 !
 !-----------------------------------------------------------------------
   implicit none
@@ -107,7 +111,9 @@ module FV3GFS_io_mod
 
   integer :: isco, ieco, jsco, jeco, levo
   real(kind=kind_phys), parameter :: missing_value = 9.99e20
+#if defined (USE_COSP)
   real(kind=kind_phys), parameter :: COSP_missing_value = -1.0E30
+#endif
 
 !-RAB
   type data_subtype
@@ -3161,6 +3167,11 @@ module FV3GFS_io_mod
     integer :: idx, num, nb, nblks, nx, ny, k
     integer, allocatable :: blksz(:)
     character(len=2) :: xtra
+#if defined (USE_COSP)
+    integer :: nt, np
+    character(len=2) :: ntc, npc
+    character(len=10) :: ntl, ntr, npl, npr
+#endif
     real(kind=kind_phys), parameter :: cn_one = 1._kind_phys
     real(kind=kind_phys), parameter :: cn_100 = 100._kind_phys
     real(kind=kind_phys), parameter :: cn_th  = 1000._kind_phys
@@ -5132,6 +5143,28 @@ module FV3GFS_io_mod
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%albisccp(:)
+    enddo
+
+    do nt = 1, ntau
+      write (ntc,'(I0.2)') nt
+      write (ntl,'(f10.1)') tau_binBounds(nt)
+      write (ntr,'(f10.1)') tau_binBounds(nt+1)
+      do np = 1, npres
+        write (npc,'(I0.2)') np
+        write (npl,'(f10.1)') pres_binBounds(nt)
+        write (npr,'(f10.1)') pres_binBounds(nt+1)
+        idx = idx + 1
+        Diag(idx)%axes = 2
+        Diag(idx)%name = 'clisccp_'//trim(ntc)//'_'//trim(npc)
+        Diag(idx)%desc = 'The fraction of the model grid box covered by each of the ISCCP cloud types (tau = '//trim(adjustl(ntl))//'-'//trim(adjustl(ntr))//', pres = '//trim(adjustl(npl))//'-'//trim(adjustl(npr))//')'
+        Diag(idx)%unit = '%'
+        Diag(idx)%mod_name = 'cosp'
+        Diag(idx)%missing_value = COSP_missing_value
+        allocate (Diag(idx)%data(nblks))
+        do nb = 1,nblks
+          Diag(idx)%data(nb)%var2 => Gfs_diag(nb)%cosp%clisccp(:,nt,np)
+        enddo
+      enddo
     enddo
 
     idx = idx + 1

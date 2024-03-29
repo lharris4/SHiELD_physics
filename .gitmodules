@@ -1,3 +1,4 @@
 [submodule "COSP"]
 	path = COSP
 	url = https://gitlab.gfdl.noaa.gov/Linjiong.Zhou/cosp.git
+	branch = cosp_for_shield
