@@ -61,7 +61,8 @@ module FV3GFS_io_mod
 !--- needed for cold-start capability to initialize q2m
   use gfdl_cld_mp_mod,    only: wqs, qs_init
   use coarse_graining_mod, only: block_mode, block_upsample, block_sum, weighted_block_average
-  use coarse_graining_mod, only: MODEL_LEVEL, PRESSURE_LEVEL, PRESSURE_LEVEL_EXTRAPOLATE, BLENDED_AREA_WEIGHTED
+  use coarse_graining_mod, only: MODEL_LEVEL_MASS_WEIGHTED, MODEL_LEVEL_AREA_WEIGHTED
+  use coarse_graining_mod, only: PRESSURE_LEVEL, PRESSURE_LEVEL_EXTRAPOLATE, BLENDED_AREA_WEIGHTED
   use coarse_graining_mod, only: vertical_remapping_requirements, get_coarse_array_bounds
   use coarse_graining_mod, only: vertically_remap_field, mask_area_weights
   use coarse_graining_mod, only: blended_area_weighted_coarse_grain_field
@@ -7585,11 +7586,16 @@ module FV3GFS_io_mod
             used = send_data(Diag_diag_manager_controlled(index)%id, var3d, Time)
           endif
           if (Diag_diag_manager_controlled_coarse(index)%id > 0) then
-            if (trim(coarsening_strategy) .eq. MODEL_LEVEL) then
-              call store_data3D_coarse_model_level(Diag_diag_manager_controlled_coarse(index)%id, &
+            if (trim(coarsening_strategy) .eq. MODEL_LEVEL_MASS_WEIGHTED) then
+              call store_data3D_coarse_model_level_mass_weighted(Diag_diag_manager_controlled_coarse(index)%id, &
                   & Diag_diag_manager_controlled_coarse(index)%name, &
                   & Diag_diag_manager_controlled_coarse(index)%coarse_graining_method, &
                   & nx, ny, levs, var3d, area, mass, Time)
+            elseif (trim(coarsening_strategy) .eq. MODEL_LEVEL_AREA_WEIGHTED) then
+              call store_data3D_coarse_model_level_area_weighted(Diag_diag_manager_controlled_coarse(index)%id, &
+                  & Diag_diag_manager_controlled_coarse(index)%name, &
+                  & Diag_diag_manager_controlled_coarse(index)%coarse_graining_method, &
+                  & nx, ny, levs, var3d, area, Time)
             elseif (trim(coarsening_strategy) .eq. PRESSURE_LEVEL .or. &
                     trim(coarsening_strategy) .eq. PRESSURE_LEVEL_EXTRAPOLATE) then
               call store_data3D_coarse_pressure_level(Diag_diag_manager_controlled_coarse(index)%id, &
@@ -7997,10 +8003,14 @@ module FV3GFS_io_mod
                used=send_data(Diag(idx)%id, var3, Time)
             endif
             if (Diag_coarse(idx)%id > 0) then
-               if (trim(coarsening_strategy) .eq. MODEL_LEVEL) then
-                  call store_data3D_coarse_model_level(Diag_coarse(idx)%id, Diag_coarse(idx)%name, &
+               if (trim(coarsening_strategy) .eq. MODEL_LEVEL_MASS_WEIGHTED) then
+                  call store_data3D_coarse_model_level_mass_weighted(Diag_coarse(idx)%id, Diag_coarse(idx)%name, &
                        Diag_coarse(idx)%coarse_graining_method, &
                        nx, ny, levo, var3, area, mass, Time)
+               elseif (trim(coarsening_strategy) .eq. MODEL_LEVEL_AREA_WEIGHTED) then
+                  call store_data3D_coarse_model_level_area_weighted(Diag_coarse(idx)%id, Diag_coarse(idx)%name, &
+                       Diag_coarse(idx)%coarse_graining_method, &
+                       nx, ny, levo, var3, area, Time)
                elseif (trim(coarsening_strategy) .eq. PRESSURE_LEVEL .or. &
                        trim(coarsening_strategy) .eq. PRESSURE_LEVEL_EXTRAPOLATE) then
                   call store_data3D_coarse_pressure_level(Diag_coarse(idx)%id, Diag_coarse(idx)%name, &
@@ -8202,8 +8212,13 @@ module FV3GFS_io_mod
    character(len=64), intent(in) :: coarsening_strategy
    logical, intent(out) :: require_area, require_masked_area, require_mass, require_vertical_remapping
 
-   require_area = any(coarse_diag%id .gt. 0 .and. coarse_diag%coarse_graining_method .eq. AREA_WEIGHTED)
-   require_mass = any(coarse_diag%id .gt. 0 .and. coarse_diag%coarse_graining_method .eq. MASS_WEIGHTED)
+   if (trim(coarsening_strategy) .eq. MODEL_LEVEL_AREA_WEIGHTED) then
+     require_mass = .false.
+     require_area = any(coarse_diag%id .gt. 0)
+   else
+     require_area = any(coarse_diag%id .gt. 0 .and. coarse_diag%coarse_graining_method .eq. AREA_WEIGHTED)
+     require_mass = any(coarse_diag%id .gt. 0 .and. coarse_diag%coarse_graining_method .eq. MASS_WEIGHTED)
+   endif
 
    if (trim(coarsening_strategy) .eq. PRESSURE_LEVEL .or. &
        trim(coarsening_strategy) .eq. PRESSURE_LEVEL_EXTRAPOLATE .or. &
@@ -8298,7 +8313,7 @@ module FV3GFS_io_mod
    used = send_data(id, coarse, Time)
  end subroutine store_data2D_coarse
 
- subroutine store_data3D_coarse_model_level(id, name, method, nx, ny, nz, full_resolution_field, &
+ subroutine store_data3D_coarse_model_level_mass_weighted(id, name, method, nx, ny, nz, full_resolution_field, &
       area, mass, Time)
    integer, intent(in) :: id
    character(len=64), intent(in) :: name
@@ -8335,7 +8350,43 @@ module FV3GFS_io_mod
       call mpp_error(FATAL, message)
    endif
    used = send_data(id, coarse, Time)
- end subroutine store_data3D_coarse_model_level
+ end subroutine store_data3D_coarse_model_level_mass_weighted
+
+ subroutine store_data3D_coarse_model_level_area_weighted(id, name, method, nx, ny, nz, full_resolution_field, &
+      area, Time)
+  integer, intent(in) :: id
+  character(len=64), intent(in) :: name
+  character(len=64), intent(in) :: method
+  integer, intent(in) :: nx, ny, nz
+  real(kind=kind_phys), intent(in) :: full_resolution_field(1:nx,1:ny,1:nz)
+  real(kind=kind_phys), intent(in) :: area(1:nx,1:ny)
+  type(time_type), intent(in) :: Time
+
+  real(kind=kind_phys), allocatable :: coarse(:,:,:)
+  character(len=128) :: message
+  integer :: is_coarse, ie_coarse, js_coarse, je_coarse, nx_coarse, ny_coarse
+  logical :: used
+
+  call get_coarse_array_bounds(is_coarse, ie_coarse, js_coarse, je_coarse)
+  nx_coarse = ie_coarse - is_coarse + 1
+  ny_coarse = je_coarse - js_coarse + 1
+
+  allocate(coarse(nx_coarse, ny_coarse, nz))
+
+  if (method .eq. AREA_WEIGHTED .or. method .eq. MASS_WEIGHTED) then
+    call weighted_block_average(area, full_resolution_field, coarse)
+  elseif (method .eq. MASKED_AREA_WEIGHTED) then
+    message = 'Masked area-weighted coarse-graining is not currently implemented for 3D variables'
+    call mpp_error(FATAL, message)
+  elseif (method .eq. MODE) then
+    message = 'Block mode coarse-graining is not currently implemented for 3D variables'
+    call mpp_error(FATAL, message)
+  else
+    message = 'A valid coarse_graining_method must be specified for ' // trim(name)
+    call mpp_error(FATAL, message)
+  endif
+  used = send_data(id, coarse, Time)
+ end subroutine store_data3D_coarse_model_level_area_weighted
 
  subroutine store_data3D_coarse_pressure_level(id, name, method, nx, ny, nz, full_resolution_field, &
         & phalf, phalf_coarse_on_fine, masked_area, Time, ptop)
