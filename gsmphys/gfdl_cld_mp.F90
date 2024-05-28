@@ -607,7 +607,8 @@ subroutine gfdl_cld_mp_driver (qv, ql, qr, qi, qs, qg, qa, qnl, qni, pt, wa, &
         prefluxw, prefluxr, prefluxi, prefluxs, prefluxg, mppcw, mppew, mppe1, &
         mpper, mppdi, mppd1, mppds, mppdg, mppsi, mpps1, mppss, mppsg, mppfw, &
         mppfr, mppmi, mppms, mppmg, mppm1, mppm2, mppm3, mppar, mppas, mppag, &
-        mpprs, mpprg, mppxr, mppxs, mppxg, last_step, do_inline_mp)
+        mpprs, mpprg, mppxr, mppxs, mppxg, last_step, do_inline_mp, &
+        use_cond, moist_kappa)
 
     implicit none
 
@@ -618,6 +619,7 @@ subroutine gfdl_cld_mp_driver (qv, ql, qr, qi, qs, qg, qa, qnl, qni, pt, wa, &
     integer, intent (in) :: is, ie, ks, ke
 
     logical, intent (in) :: hydrostatic, last_step, consv_te, do_inline_mp
+    logical, intent (in) :: use_cond, moist_kappa
 
     real, intent (in) :: dtm
 
@@ -653,7 +655,8 @@ subroutine gfdl_cld_mp_driver (qv, ql, qr, qi, qs, qg, qa, qnl, qni, pt, wa, &
         prefluxi, prefluxs, prefluxg, mppcw, mppew, mppe1, mpper, mppdi, mppd1, &
         mppds, mppdg, mppsi, mpps1, mppss, mppsg, mppfw, mppfr, mppmi, mppms, &
         mppmg, mppm1, mppm2, mppm3, mppar, mppas, mppag, mpprs, mpprg, mppxr, &
-        mppxs, mppxg, last_step, do_inline_mp, .false., .true.)
+        mppxs, mppxg, last_step, do_inline_mp, .false., .true., &
+        use_cond, moist_kappa)
 
 end subroutine gfdl_cld_mp_driver
 
@@ -1164,7 +1167,8 @@ subroutine mpdrv (hydrostatic, ua, va, wa, delp, pt, qv, ql, qr, qi, qs, qg, &
         prefluxi, prefluxs, prefluxg, mppcw, mppew, mppe1, mpper, mppdi, mppd1, &
         mppds, mppdg, mppsi, mpps1, mppss, mppsg, mppfw, mppfr, mppmi, mppms, &
         mppmg, mppm1, mppm2, mppm3, mppar, mppas, mppag, mpprs, mpprg, mppxr, &
-        mppxs, mppxg, last_step, do_inline_mp, do_mp_fast, do_mp_full)
+        mppxs, mppxg, last_step, do_inline_mp, do_mp_fast, do_mp_full, &
+        use_cond, moist_kappa)
 
     implicit none
 
@@ -1175,7 +1179,7 @@ subroutine mpdrv (hydrostatic, ua, va, wa, delp, pt, qv, ql, qr, qi, qs, qg, &
     integer, intent (in) :: is, ie, ks, ke
 
     logical, intent (in) :: hydrostatic, last_step, consv_te, do_inline_mp
-    logical, intent (in) :: do_mp_fast, do_mp_full
+    logical, intent (in) :: do_mp_fast, do_mp_full, use_cond, moist_kappa
 
     real, intent (in) :: dtm
 
@@ -1497,7 +1501,7 @@ subroutine mpdrv (hydrostatic, ua, va, wa, delp, pt, qv, ql, qr, qi, qs, qg, &
             oeg (:) = 0.0
             rrg (:) = 0.0
             tvg (:) = 0.0
-         
+
             do k = ks, ke
                 if (qlz (k) .gt. qcmin) then
                     call cal_pc_ed_oe_rr_tv (qlz (k), den (k), blinw, muw, pcaw, pcbw, pcw (k), &
@@ -1612,13 +1616,11 @@ subroutine mpdrv (hydrostatic, ua, va, wa, delp, pt, qv, ql, qr, qi, qs, qg, &
             con_r8 = one_r8 - (qvz (k) + q_cond)
             c8 = mhc (con_r8, qvz (k), q_liq (k), q_sol (k)) * c_air
 
-#ifdef USE_COND
-            q_con (i, k) = q_cond
-#endif
-#ifdef MOIST_CAPPA
-            tmp = rdgas * (1. + zvir * qvz (k))
-            cappa (i, k) = tmp / (tmp + c8)
-#endif
+            if (use_cond) q_con (i, k) = q_cond
+            if (moist_kappa) then
+               tmp = rdgas * (1. + zvir * qvz (k))
+               cappa (i, k) = tmp / (tmp + c8)
+            endif
 
         enddo
 
@@ -5723,7 +5725,8 @@ subroutine cld_sat_adj (dtm, is, ie, ks, ke, hydrostatic, consv_te, &
         pt, delp, q_con, cappa, gsize, mppcw, mppew, mppe1, mpper, mppdi, &
         mppd1, mppds, mppdg, mppsi, mpps1, mppss, mppsg, mppfw, mppfr, &
         mppmi, mppms, mppmg, mppm1, mppm2, mppm3, mppar, mppas, mppag, &
-        mpprs, mpprg, mppxr, mppxs, mppxg, last_step, do_sat_adj)
+        mpprs, mpprg, mppxr, mppxs, mppxg, last_step, do_sat_adj, &
+        use_cond, moist_kappa)
 
     implicit none
 
@@ -5734,6 +5737,7 @@ subroutine cld_sat_adj (dtm, is, ie, ks, ke, hydrostatic, consv_te, &
     integer, intent (in) :: is, ie, ks, ke
 
     logical, intent (in) :: hydrostatic, last_step, consv_te, do_sat_adj
+    logical, intent (in) :: use_cond, moist_kappa
 
     real, intent (in) :: dtm
 
@@ -5795,7 +5799,8 @@ subroutine cld_sat_adj (dtm, is, ie, ks, ke, hydrostatic, consv_te, &
         prefluxi, prefluxs, prefluxg, mppcw, mppew, mppe1, mpper, mppdi, mppd1, &
         mppds, mppdg, mppsi, mpps1, mppss, mppsg, mppfw, mppfr, mppmi, mppms, &
         mppmg, mppm1, mppm2, mppm3, mppar, mppas, mppag, mpprs, mpprg, mppxr, &
-        mppxs, mppxg, last_step, .false., do_sat_adj, .false.)
+        mppxs, mppxg, last_step, .false., do_sat_adj, .false., &
+        use_cond, moist_kappa)
 
 end subroutine cld_sat_adj
 
