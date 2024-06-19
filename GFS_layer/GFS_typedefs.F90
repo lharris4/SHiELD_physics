@@ -3998,6 +3998,8 @@ end subroutine overrides_create
     allocate (Diag%pfr(IM,Model%levs))
     allocate (Diag%pfs(IM,Model%levs))
     allocate (Diag%pfg(IM,Model%levs))
+    allocate (Diag%column_moles_co2_per_square_meter(IM))
+    allocate (Diag%column_moles_dry_air_per_square_meter(IM))
 
     !--- 3D diagnostics
     if (Model%ldiag3d) then
