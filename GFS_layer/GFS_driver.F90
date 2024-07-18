@@ -176,7 +176,7 @@ module GFS_driver
     enddo
 
     !--- populate the grid components
-    call GFS_grid_populate (Grid, Init_parm%xlon, Init_parm%xlat, Init_parm%area)
+    call GFS_grid_populate (Grid, Init_parm%xlon, Init_parm%xlat, Init_parm%area, Model%sa_fac)
 
     !--- read in and initialize ozone and water
     if (Model%ntoz > 0) then
@@ -760,7 +760,7 @@ module GFS_driver
 !------------------
 ! GFS_grid_populate
 !------------------
-  subroutine GFS_grid_populate (Grid, xlon, xlat, area)
+  subroutine GFS_grid_populate (Grid, xlon, xlat, area, sa_fac)
     use physcons,                 only: pi => con_pi
 
     implicit none
@@ -769,6 +769,7 @@ module GFS_driver
     real(kind=kind_phys), intent(in) :: xlon(:,:)
     real(kind=kind_phys), intent(in) :: xlat(:,:)
     real(kind=kind_phys), intent(in) :: area(:,:)
+    real(kind=kind_phys), intent(in) :: sa_fac
 
     !--- local variables
     integer :: nb, ix, blksz, i, j
@@ -789,8 +790,8 @@ module GFS_driver
         Grid(nb)%xlat_d(ix) = xlat(i,j) * 180.0_kind_phys/pi
         Grid(nb)%sinlat(ix) = sin(Grid(nb)%xlat(ix))
         Grid(nb)%coslat(ix) = sqrt(1.0_kind_phys - Grid(nb)%sinlat(ix)*Grid(nb)%sinlat(ix))
-        Grid(nb)%area(ix)   = area(i,j)
-        Grid(nb)%dx(ix)     = sqrt(area(i,j))
+        Grid(nb)%area(ix)   = area(i,j)*sa_fac*sa_fac
+        Grid(nb)%dx(ix)     = sqrt(area(i,j))*sa_fac
       enddo
     enddo
 

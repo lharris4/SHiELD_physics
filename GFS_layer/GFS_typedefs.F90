@@ -760,6 +760,7 @@ module GFS_typedefs
 
     real(kind=kind_phys) :: rbcr            !< Critical Richardson Number in the PBL scheme
     logical              :: mix_precip      !< Whether to apply PBL mixing to precipitating hydrometeors
+    real(kind=kind_phys) :: sa_fac          !< length scaling factor for scale-aware schemes
 
     !--- Rayleigh friction
     real(kind=kind_phys) :: prslrd0         !< pressure level from which Rayleigh Damping is applied
@@ -2475,6 +2476,8 @@ end subroutine overrides_create
                                                                       !< from cloud edges for RAS
     real(kind=kind_phys) :: rbcr           = 0.25                     !< Critical Richardson Number in PBL scheme
     logical              :: mix_precip     = .true.                   !< Whether to apply PBL mixing to precipitating hydrometeors
+    real(kind=kind_phys) :: sa_fac         = 1.0                      !< length scaling factor for scale-aware schemes
+
 
     !--- Rayleigh friction
     real(kind=kind_phys) :: prslrd0        = 0.0d0           !< pressure level from which Rayleigh Damping is applied
@@ -2643,7 +2646,7 @@ end subroutine overrides_create
                                random_clds, shal_cnv, imfshalcnv, imfdeepcnv, isatmedmf,    &
                                l2_diag_opt, l1l2_blend_opt, do_deep, jcap,                  &
                                cs_parm, flgmin, cgwf, ccwf, cdmbgwd, sup, ctei_rm, crtrh,   &
-                               dlqf,rbcr,mix_precip,orogwd,myj_pbl,ysupbl,satmedmf,         &
+                               dlqf,rbcr,mix_precip,sa_fac,orogwd,myj_pbl,ysupbl,satmedmf,  &
                                cap_k0_land,do_dk_hb19,use_lup_only,use_l1_sfc,              &
                                use_tke_pbl,use_shear_pbl,use_tke_conv,use_shear_conv,       &
                                limit_shal_conv,cloud_gfdl,gwd_p_crit,                       &
@@ -2952,6 +2955,7 @@ end subroutine overrides_create
     Model%dlqf             = dlqf
     Model%rbcr             = rbcr
     Model%mix_precip       = mix_precip
+    Model%sa_fac           = sa_fac
 
     !--- Rayleigh friction
     Model%prslrd0          = prslrd0
