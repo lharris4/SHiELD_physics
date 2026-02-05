@@ -3119,6 +3119,101 @@ module FV3GFS_io_mod
             enddo
          enddo
       endif
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_zonal_wind_due_to_turbulence'
+      Diag_diag_manager_controlled(index)%desc = 'zonal wind tendency due to turbulence scheme'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%du3dt(:,:,1)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_zonal_wind_due_to_OGWD'
+      Diag_diag_manager_controlled(index)%desc = 'zonal wind tendency due to orographic gravity wave drag'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%du3dt(:,:,2)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_zonal_wind_due_to_deep_convection'
+      Diag_diag_manager_controlled(index)%desc = 'zonal wind tendency due to deep convection'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%du3dt(:,:,3)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_zonal_wind_due_to_CGWD'
+      Diag_diag_manager_controlled(index)%desc = 'zonal wind tendency due to convective (nonorographic) gravity wave drag'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%du3dt(:,:,4)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_meridional_wind_due_to_turbulence'
+      Diag_diag_manager_controlled(index)%desc = 'meridional wind tendency due to turbulence scheme'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%dv3dt(:,:,1)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_meridional_wind_due_to_OGWD'
+      Diag_diag_manager_controlled(index)%desc = 'meridional wind tendency due to orographic gravity wave drag'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%dv3dt(:,:,2)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_meridional_wind_due_to_deep_convection'
+      Diag_diag_manager_controlled(index)%desc = 'meridional wind tendency due to deep convection'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%dv3dt(:,:,3)
+      enddo
+
+      index = index + 1
+      Diag_diag_manager_controlled(index)%axes = 3
+      Diag_diag_manager_controlled(index)%name = 'tendency_of_meridional_wind_due_to_CGWD'
+      Diag_diag_manager_controlled(index)%desc = 'meridional wind tendency due to convective (nonorographic) gravity wave drag'
+      Diag_diag_manager_controlled(index)%unit = 'm/s**2'
+      Diag_diag_manager_controlled(index)%mod_name = 'gfs_phys'
+      Diag_diag_manager_controlled(index)%coarse_graining_method = 'mass_weighted'
+      allocate (Diag_diag_manager_controlled(index)%data(nblks))
+      do nb = 1,nblks
+         Diag_diag_manager_controlled(index)%data(nb)%var3 => IntDiag(nb)%dv3dt(:,:,4)
+      enddo
    endif
 
    index = index + 1
