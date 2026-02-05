@@ -67,6 +67,8 @@ module FV3GFS_io_mod
   use coarse_graining_mod, only: vertically_remap_field, mask_area_weights
   use coarse_graining_mod, only: blended_area_weighted_coarse_grain_field
 
+  use topo_drag_driver_mod, only: topo_drag_init, topo_drag_end
+
 #if defined (USE_COSP)
   use MOD_COSP_CONFIG,     only: ntau, npres, tau_binBounds, pres_binBounds
 #endif
@@ -180,12 +182,13 @@ module FV3GFS_io_mod
 !--------------------
 ! FV3GFS_restart_read
 !--------------------
-  subroutine FV3GFS_restart_read (IPD_Data, IPD_Restart, Atm_block, Model, fv_domain, enforce_rst_cksum)
+  subroutine FV3GFS_restart_read (IPD_Data, IPD_Restart, Atm_block, Model, fv_domain, lon_bnd, lat_bnd, enforce_rst_cksum)
     type(IPD_data_type),      intent(inout) :: IPD_Data(:)
     type(IPD_restart_type),   intent(inout) :: IPD_Restart
     type(block_control_type), intent(in)    :: Atm_block
     type(IPD_control_type),   intent(inout) :: Model
     type(domain2d),           intent(in)    :: fv_domain
+    real, dimension(:,:),     intent(in)    :: lon_bnd, lat_bnd
     logical,                  intent(in)    :: enforce_rst_cksum
 
     !--- read in surface data from chgres
@@ -196,6 +199,11 @@ module FV3GFS_io_mod
 
     !--- read in physics restart data
     call phys_restart_read (IPD_Restart, Atm_block, Model, fv_domain, enforce_rst_cksum)
+
+    !--- initialize AM4 topo_drag, if necessary
+    if (Model%topo_drag_gwd) then
+       call topo_drag_init (fv_domain, lon_bnd, lat_bnd, IPD_Data%Sfcprop, Atm_block, Model%isc, Model%jsc, enforce_rst_cksum)
+    endif
 
   end subroutine FV3GFS_restart_read
 
@@ -215,6 +223,10 @@ module FV3GFS_io_mod
 
     !--- read in physics restart data
     call phys_restart_write (IPD_Restart, Atm_block, Model, fv_domain, timestamp)
+
+    if (Model%topo_drag_gwd) then
+       call topo_drag_end
+    endif
 
   end subroutine FV3GFS_restart_write
 

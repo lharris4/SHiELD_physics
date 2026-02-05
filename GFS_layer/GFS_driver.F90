@@ -245,7 +245,7 @@ module GFS_driver
 
     !--- initialize soil vegetation
     call set_soilveg(Model, Model%isot, Model%ivegsrc, Init_parm%logunit, size(Model%input_nml_file), Model%input_nml_file)
-!
+
     !--- lsidea initialization
     if (Model%lsidea) then
       print *,' LSIDEA is active but needs to be reworked for FV3 - shutting down'

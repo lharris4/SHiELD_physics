@@ -208,7 +208,13 @@ module GFS_typedefs
     real (kind=kind_phys), pointer :: ztrl   (:)   => null()  !< surface roughness for t and q in cm
     real (kind=kind_phys), pointer :: fice   (:)   => null()  !< ice fraction over open water grid
     real (kind=kind_phys), pointer :: hprim  (:)   => null()  !< topographic standard deviation in m            !
-    real (kind=kind_phys), pointer :: hprime (:,:) => null()  !< orographic metrics
+    real (kind=kind_phys), pointer :: hprime (:,:) => null()  !< GFS GWD orographic metrics
+    real (kind=kind_phys), pointer :: t11    (:)   => null()  !< AM4 GWD orographic metrics
+    real (kind=kind_phys), pointer :: t12    (:)   => null()  !<
+    real (kind=kind_phys), pointer :: t21    (:)   => null()  !<
+    real (kind=kind_phys), pointer :: t22    (:)   => null()  !<
+    real (kind=kind_phys), pointer :: hmin   (:)   => null()  !<
+    real (kind=kind_phys), pointer :: hmax   (:)   => null()  !<
 
     !--- In (radiation only)
     real (kind=kind_phys), pointer :: sncovr (:)   => null()  !< snow cover in fraction
@@ -547,7 +553,7 @@ module GFS_typedefs
                                             !< radiation code treating ocean grid
                                             !< cells with temperature below
                                             !< freezing as sea ice
-    
+
     integer              :: iems            !< use fixed value of 1.0
     integer              :: iaer            !< default aerosol effect in sw only
     integer              :: iovr_sw         !< sw: max-random overlap clouds
@@ -646,6 +652,7 @@ module GFS_typedefs
     logical              :: trans_trac      !< flag for convective transport of tracers (RAS only)
     logical              :: old_monin       !< flag for diff monin schemes
     logical              :: orogwd          !< flag for orog gravity wave drag
+    logical              :: topo_drag_gwd   !< flag for AM4 topo_drag orog gravity wave drag
     logical              :: cnvgwd          !< flag for conv gravity wave drag
     logical              :: mstrat          !< flag for moorthi approach for stratus
     logical              :: moist_adj       !< flag for moist convective adjustment
@@ -661,7 +668,7 @@ module GFS_typedefs
     logical              :: shcnvcw         !< flag for shallow convective cloud
     logical              :: redrag          !< flag for reduced drag coeff. over sea
     logical              :: sfc_gfdl        !< flag for using updated sfc layer scheme
-    logical              :: sfc_coupled     !< flag for using sfc layer scheme designed for coupled SHiELD 
+    logical              :: sfc_coupled     !< flag for using sfc layer scheme designed for coupled SHiELD
                                             !< will set to true by atmos_driver; this is not a namelist parameter
     real(kind=kind_phys) :: z0s_max         !< a limiting value for z0 under high winds
     logical              :: do_z0_moon      !< flag for using z0 scheme in Moon et al. 2007 (kgao)
@@ -903,7 +910,7 @@ module GFS_typedefs
     !--- debug flag
     logical              :: debug
     logical              :: pre_rad         !< flag for testing purpose
-    logical              :: do_ocean        !< flag for slab ocean model 
+    logical              :: do_ocean        !< flag for slab ocean model
     logical              :: use_ifs_ini_sst !< only work when "ecmwf_ic = .T."
     logical              :: use_ext_sst     !< flag for using external SST forcing (or any external SST dataset, passed from the dynamics or nudging)
 
@@ -1343,7 +1350,7 @@ module GFS_typedefs
     ! Output - only in physics
     real (kind=kind_phys), pointer :: u10m   (:)    => null()   !< 10 meter u/v wind speed
     real (kind=kind_phys), pointer :: v10m   (:)    => null()   !< 10 meter u/v wind speed
-    real (kind=kind_phys), pointer :: hflx   (:)    => null()   !< sfc temp flux 
+    real (kind=kind_phys), pointer :: hflx   (:)    => null()   !< sfc temp flux
     real (kind=kind_phys), pointer :: evap   (:)    => null()   !< sfc moisture flux
     real (kind=kind_phys), pointer :: dpt2m  (:)    => null()   !< 2 meter dew point temperature
     real (kind=kind_phys), pointer :: zlvl   (:)    => null()   !< layer 1 height (m)
@@ -1655,6 +1662,20 @@ module GFS_typedefs
     allocate (Sfcprop%fice   (IM))
     allocate (Sfcprop%hprim  (IM))
     allocate (Sfcprop%hprime (IM,Model%nmtvr))
+    if (Model%topo_drag_gwd) then
+       allocate (Sfcprop%t11(IM))
+       allocate (Sfcprop%t12(IM))
+       allocate (Sfcprop%t21(IM))
+       allocate (Sfcprop%t22(IM))
+       allocate (Sfcprop%hmin(IM))
+       allocate (Sfcprop%hmax(IM))
+       Sfcprop%t11 = clear_val
+       Sfcprop%t12 = clear_val
+       Sfcprop%t21 = clear_val
+       Sfcprop%t22 = clear_val
+       Sfcprop%hmin = clear_val
+       Sfcprop%hmax = clear_val
+    endif
 
     Sfcprop%slmsk   = clear_val
     Sfcprop%oceanfrac = clear_val
@@ -2388,6 +2409,7 @@ end subroutine overrides_create
     logical              :: trans_trac     = .false.                  !< flag for convective transport of tracers (RAS only)
     logical              :: old_monin      = .false.                  !< flag for diff monin schemes
     logical              :: orogwd         = .true.                   !< flag for oro gravity wave drag
+    logical              :: topo_drag_gwd  = .false.                  !< flag for AM4oro gravity wave drag
     logical              :: cnvgwd         = .false.                  !< flag for conv gravity wave drag
     logical              :: mstrat         = .false.                  !< flag for moorthi approach for stratus
     logical              :: moist_adj      = .false.                  !< flag for moist convective adjustment
@@ -2402,7 +2424,7 @@ end subroutine overrides_create
     logical              :: shcnvcw        = .false.                  !< flag for shallow convective cloud
     logical              :: redrag         = .false.                  !< flag for reduced drag coeff. over sea
     logical              :: sfc_gfdl       = .false.                  !< flag for using new sfc layer scheme by kgao at GFDL
-    logical              :: sfc_coupled    = .false.                  !< flag for using sfc layer scheme designed for coupled SHiELD 
+    logical              :: sfc_coupled    = .false.                  !< flag for using sfc layer scheme designed for coupled SHiELD
     real(kind=kind_phys) :: z0s_max        = .317e-2                  !< a limiting value for z0 under high winds
     logical              :: do_z0_moon     = .false.                  !< flag for using z0 scheme in Moon et al. 2007
     logical              :: do_z0_hwrf15   = .false.                  !< flag for using z0 scheme in 2015 HWRF
@@ -2614,8 +2636,8 @@ end subroutine overrides_create
     logical              :: debug          = .false.
     logical              :: lprnt          = .false.
     logical              :: pre_rad        = .false.         !< flag for testing purpose
-    logical              :: do_ocean       = .false.         !< flag for slab ocean model 
-    logical              :: use_ifs_ini_sst= .false.         !< only work when "ecmwf_ic = .T. 
+    logical              :: do_ocean       = .false.         !< flag for slab ocean model
+    logical              :: use_ifs_ini_sst= .false.         !< only work when "ecmwf_ic = .T.
     logical              :: use_ext_sst    = .false.         !< flag for using external SST forcing (or any external SST dataset, passed from the dynamics or nudging)
 
 !--- aerosol scavenging factors
@@ -2669,7 +2691,7 @@ end subroutine overrides_create
                                random_clds, shal_cnv, imfshalcnv, imfdeepcnv, isatmedmf,    &
                                l2_diag_opt, l1l2_blend_opt, do_deep, jcap,                  &
                                cs_parm, flgmin, cgwf, ccwf, cdmbgwd, sup, ctei_rm, crtrh,   &
-                               dlqf,rbcr,mix_precip,orogwd,myj_pbl,ysupbl,satmedmf,         &
+                               dlqf,rbcr,mix_precip,orogwd,topo_drag_gwd, myj_pbl,ysupbl,satmedmf, &
                                cap_k0_land,do_dk_hb19,use_lup_only,use_l1_sfc,              &
                                use_tke_pbl,use_shear_pbl,use_tke_conv,use_shear_conv,       &
                                limit_shal_conv,cloud_gfdl,gwd_p_crit,                       &
@@ -2883,6 +2905,7 @@ end subroutine overrides_create
     Model%trans_trac       = trans_trac
     Model%old_monin        = old_monin
     Model%orogwd           = orogwd
+    Model%topo_drag_gwd    = topo_drag_gwd
     Model%cnvgwd           = cnvgwd
     Model%mstrat           = mstrat
     Model%moist_adj        = moist_adj
