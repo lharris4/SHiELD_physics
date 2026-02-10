@@ -208,9 +208,9 @@ type(FmsNetcdfFile_t) :: topography_fileobj, dragtensor_fileobj !< Fms2io fileob
      endif
 
      ! check for correct field size in topography
-     call get_variable_size(topography_fileobj, 'hpos', siz)
+     call get_variable_size(topography_fileobj, trim('hpoz'), siz(1:2))
      if (siz(1) /= ipts .or. siz(2) /= jpts) then
-         call error_mesg('topo_drag_mod', 'Field \"hpos\" in file '//  &
+         call error_mesg('topo_drag_mod', 'Field \"hpoz\" in file '//  &
                    trim(topography_file)//' has the wrong size', FATAL)
      endif
      
@@ -239,7 +239,7 @@ type(FmsNetcdfFile_t) :: topography_fileobj, dragtensor_fileobj !< Fms2io fileob
      call horiz_interp_init
      call horiz_interp_new ( Interp, xdatb, ydatb, lonb, latb, interp_method="conservative" )
 
-     call read_data (topography_fileobj, 'hpos', zdat)
+     call read_data (topography_fileobj, 'hpoz', zdat)
 
      exponent = 2. - gamma
      zdat = max(0., zdat)**exponent
@@ -257,7 +257,7 @@ type(FmsNetcdfFile_t) :: topography_fileobj, dragtensor_fileobj !< Fms2io fileob
 
      ! check for correct field size in tensor file
 
-     call get_variable_size(dragtensor_fileobj, tensornames(1), siz)
+     call get_variable_size(dragtensor_fileobj, tensornames(1), siz(1:2))
      if (siz(1) /= ipts .or. siz(2) /= jpts) then
          call error_mesg('topo_drag_mod', 'Fields in file ' &
          //trim(dragtensor_file)//' have the wrong size', FATAL)
