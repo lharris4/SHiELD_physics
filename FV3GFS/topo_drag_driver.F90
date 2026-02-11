@@ -29,8 +29,8 @@ use    topo_drag_mod, only: frcrit, alin, anonlin, beta, gamma, epsi,           
                             h_frac, zref_fac, tboost, pcut, samp, max_udt,          &
                             no_drag_frac, max_pbl_frac,                             &
                             do_conserve_energy, keep_residual_flux, do_pbl_average, &
-                            use_mg_scaling, use_mask_for_pbl, use_pbl_from_lock,    &
-                            use_uref_4stable
+                            use_mg_scaling, use_mask_for_pbl, ricrit,               &
+                            use_pbl_from_vert_turb, use_uref_4stable
 use    GFS_typedefs,  only: GFS_sfcprop_type
 use block_control_mod,only: block_control_type
 use physcons,         only: Grav => con_g,  Cp_Air => con_cp,  Pi => con_pi, &
@@ -79,8 +79,8 @@ NAMELIST /topo_drag_nml/                                               &
   h_frac, zref_fac, tboost, pcut, samp, max_udt,                       &
   no_drag_frac, max_pbl_frac,                                          &
   do_conserve_energy, keep_residual_flux, do_pbl_average,              &
-  use_mg_scaling, use_mask_for_pbl, use_pbl_from_lock,                 &    !stg
-  use_uref_4stable
+  use_mg_scaling, use_mask_for_pbl, use_pbl_from_vert_turb,            &    !stg
+  use_uref_4stable, ricrit
 
 public topo_drag_init, topo_drag_end
 public topo_drag_restart
