@@ -324,6 +324,11 @@
      &,' i=',i
             tice(i) = timin
             print *,'fix snow/ice temperature: reset it to:',tice(i)
+            print*, 'information:'
+            print*, t1(i), tskin(i), stc(i)
+            print*, hfi(i), hfd(i), sneti(i), focn(i)
+            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, fice(i), snowmt(i), gflux(i)
           endif
 
           if (stsice(i,1) < timin) then
@@ -331,12 +336,22 @@
      &,' i=',i
             stsice(i,1) = timin
             print *,'fix layer 1 ice temp: reset it to:',stsice(i,1)
+            print*, 'information:'
+            print*, t1(i), tskin(i), stc(i)
+            print*, hfi(i), hfd(i), sneti(i), focn(i)
+            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, fice(i), snowmt(i), gflux(i)
           endif
 
           if (stsice(i,2) < timin) then
             print *,'warning: layer 2 ice temp is too low:',stsice(i,2)
             stsice(i,2) = timin
             print *,'fix layer 2 ice temp: reset it to:',stsice(i,2)
+            print*, 'information:'
+            print*, t1(i), tskin(i), stc(i)
+            print*, hfi(i), hfd(i), sneti(i), focn(i)
+            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, fice(i), snowmt(i), gflux(i)
           endif
 
           tskin(i) = tice(i)*fice(i) + tgice*ffw(i)
