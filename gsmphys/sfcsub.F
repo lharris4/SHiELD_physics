@@ -2844,7 +2844,7 @@
         if (me == 0 .and. print_debug) write(6,*) 'idim,jdim=',idim,jdim
      &,                ' gaus=',gaus,' blno=',blno,' blto=',blto
       else
-        if (me ==. 0) write(6,*) 'idim,jdim=',idim,jdim
+        if (me == 0) write(6,*) 'idim,jdim=',idim,jdim
      &,                ' gaus=',gaus,' blno=',blno,' blto=',blto
         write(6,*) ' error in getgb : jret=',jret
         write(6,*) ' kpds(13)=',kpds(13),' kpds(15)=',kpds(15)
@@ -3525,7 +3525,7 @@
               endif
               ifill(it) = ifill(it) + 1
               if(ifill(it) <= 2 ) then
-                if (me == 0 .and. num_threads == 1) then
+                if (me == 0 .and. num_threads == 1 .and. print_debug) then
                   write(6,*) 'i1,i2,j1,j2=',i1,i2,j1,j2
                   write(6,*) 'rslmsk=',rslmsk(i1,j1),rslmsk(i1,j2),
      &                                 rslmsk(i2,j1),rslmsk(i2,j2)
@@ -5589,7 +5589,8 @@
                iwk(kmino) = i
             endif
           enddo
-          if(me == 0 . and. it == 1 .and. num_threads == 1) then
+          if(me == 0 . and. it == 1 .and. num_threads == 1
+     $         .and. print_debug) then
             nprt = min(mmprt,kmino)
             do i=1,nprt
               ij = iwk(i)
