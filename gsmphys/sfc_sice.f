@@ -325,9 +325,9 @@
             tice(i) = timin
             print *,'fix snow/ice temperature: reset it to:',tice(i)
             print*, 'information:'
-            print*, t1(i), tskin(i), stc(i)
+            print*, t1(i), tskin(i), stc(i,:)
             print*, hfi(i), hfd(i), sneti(i), focn(i)
-            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, snowd(i), hice(i), stsice(i,:), snof(i)
             print*, fice(i), snowmt(i), gflux(i)
           endif
 
@@ -337,9 +337,9 @@
             stsice(i,1) = timin
             print *,'fix layer 1 ice temp: reset it to:',stsice(i,1)
             print*, 'information:'
-            print*, t1(i), tskin(i), stc(i)
+            print*, t1(i), tskin(i), stc(i,:)
             print*, hfi(i), hfd(i), sneti(i), focn(i)
-            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, snowd(i), hice(i), stsice(i,:), snof(i)
             print*, fice(i), snowmt(i), gflux(i)
           endif
 
@@ -348,9 +348,9 @@
             stsice(i,2) = timin
             print *,'fix layer 2 ice temp: reset it to:',stsice(i,2)
             print*, 'information:'
-            print*, t1(i), tskin(i), stc(i)
+            print*, t1(i), tskin(i), stc(i,:)
             print*, hfi(i), hfd(i), sneti(i), focn(i)
-            print*, snowd(i), hice(i), stsice(i), snowf(i)
+            print*, snowd(i), hice(i), stsice(i,:), snof(i)
             print*, fice(i), snowmt(i), gflux(i)
           endif
 

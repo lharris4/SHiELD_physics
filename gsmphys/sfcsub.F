@@ -3525,7 +3525,8 @@
               endif
               ifill(it) = ifill(it) + 1
               if(ifill(it) <= 2 ) then
-                if (me == 0 .and. num_threads == 1 .and. print_debug) then
+                if (me == 0 .and. num_threads == 1
+     $                .and. print_debug) then
                   write(6,*) 'i1,i2,j1,j2=',i1,i2,j1,j2
                   write(6,*) 'rslmsk=',rslmsk(i1,j1),rslmsk(i1,j2),
      &                                 rslmsk(i2,j1),rslmsk(i2,j2)
