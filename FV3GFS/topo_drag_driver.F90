@@ -35,7 +35,8 @@ use    GFS_typedefs,  only: GFS_sfcprop_type
 use block_control_mod,only: block_control_type
 use physcons,         only: Grav => con_g,  Cp_Air => con_cp,  Pi => con_pi, &
                             Rdgas=> con_rd, cvap  => con_cvap
-                            
+use IPD_typedefs,     only: IPD_control_type
+use atmosphere_mod,   only: atmosphere_grid_bdry
 
 implicit none
 
@@ -55,7 +56,6 @@ integer :: kd=0
 
 real, allocatable, dimension(:,:) :: t11, t21, t12, t22    ! drag tensor
 real, allocatable, dimension(:,:) :: hmin, hmax
-real, allocatable, dimension(:,:) :: lon, lat
 
 ! parameters:
 
@@ -116,13 +116,12 @@ contains
 
 end subroutine
 
-subroutine topo_drag_init (domain, lonb, latb, Sfcprop, Atm_block, isc, jsc, enforce_rst_cksum)
+subroutine topo_drag_init (domain, Sfcprop, Atm_block, Model, enforce_rst_cksum)
 
 type(domain2D), target, intent(in) :: domain
-real, intent(in), dimension(:,:) :: lonb, latb !coordinates of corners
 type(GFS_sfcprop_type), intent(in) :: Sfcprop(:)
 type(block_control_type), intent(in)    :: Atm_block
-integer, intent(in) :: isc, jsc
+type(IPD_control_type),   intent(inout) :: Model
 logical, intent(in) :: enforce_rst_cksum
 
 character(len=128) :: msg
@@ -137,9 +136,11 @@ real, parameter :: bfscale=1.0e-2      ! buoyancy frequency scale [1/s]
 
 real, allocatable, dimension(:)   :: xdatb, ydatb
 real, allocatable, dimension(:,:) :: zdat, zout
+real, allocatable, dimension(:,:) :: lonb_loc, latb_loc
 type (horiz_interp_type) :: Interp
 real :: exponent, hmod
 
+integer :: isc, jsc
 integer :: n
 integer :: io, ierr, unit_nml, logunit
 integer :: i, j
@@ -150,8 +151,11 @@ type(FmsNetcdfFile_t) :: topography_fileobj, dragtensor_fileobj !< Fms2io fileob
 
   if (module_is_initialized) return
 
-  nlon = size(lonb,1)-1
-  nlat = size(latb,2)-1
+  isc = Model%isc
+  jsc = Model%jsc
+
+  nlon = Model%nx
+  nlat = Model%ny
 
 ! read namelist
 
@@ -226,18 +230,15 @@ type(FmsNetcdfFile_t) :: topography_fileobj, dragtensor_fileobj !< Fms2io fileob
         ydatb(j) = (-90.0 + (j-1)/resolution) / Radian
      enddo
 
-     allocate (lon(nlon,nlat),lat(nlon,nlat))
-     do i=1,nlon
-        do j=1,nlat
-           lon(i,j) = 0.25*(lonb(i,j)+lonb(i+1,j)+lonb(i,j+1)+lonb(i+1,j+1))
-           lat(i,j) = 0.25*(latb(i,j)+latb(i+1,j)+latb(i,j+1)+latb(i+1,j+1))
-        enddo
-     enddo
+     allocate (lonb_loc(nlon+1,nlat+1))
+     allocate (latb_loc(nlon+1,nlat+1))
+     call atmosphere_grid_bdry (lonb_loc, latb_loc, global=.false.)
 
      ! initialize horizontal interpolation
 
      call horiz_interp_init
-     call horiz_interp_new ( Interp, xdatb, ydatb, lonb, latb, interp_method="conservative" )
+     call horiz_interp_new ( Interp, xdatb, ydatb, lonb_loc, latb_loc, interp_method="conservative" )
+     deallocate(lonb_loc, latb_loc)
 
      call read_data (topography_fileobj, 'hpoz', zdat)
 

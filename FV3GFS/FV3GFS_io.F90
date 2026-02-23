@@ -7,6 +7,10 @@ module FV3GFS_io_mod
 !    atmospheric time tendencies for use by other components, namely
 !    the atmospheric dynamical core.
 !
+!    Any physics routines needing FMS modules should either be placed
+!      in this file, or in the FV3GFS directory. Other directories in
+!      the physics do not have direct access to FMS.
+!
 !    NOTE: This module currently supports only the operational GFS
 !          parameterizations as of September 2015.  Further development
 !          is needed to support the full suite of physical
@@ -182,13 +186,12 @@ module FV3GFS_io_mod
 !--------------------
 ! FV3GFS_restart_read
 !--------------------
-  subroutine FV3GFS_restart_read (IPD_Data, IPD_Restart, Atm_block, Model, fv_domain, lon_bnd, lat_bnd, enforce_rst_cksum)
+  subroutine FV3GFS_restart_read (IPD_Data, IPD_Restart, Atm_block, Model, fv_domain, enforce_rst_cksum)
     type(IPD_data_type),      intent(inout) :: IPD_Data(:)
     type(IPD_restart_type),   intent(inout) :: IPD_Restart
     type(block_control_type), intent(in)    :: Atm_block
     type(IPD_control_type),   intent(inout) :: Model
     type(domain2d),           intent(in)    :: fv_domain
-    real, dimension(:,:),     intent(in)    :: lon_bnd, lat_bnd
     logical,                  intent(in)    :: enforce_rst_cksum
 
     !--- read in surface data from chgres
@@ -202,7 +205,7 @@ module FV3GFS_io_mod
 
     !--- initialize AM4 topo_drag, if necessary
     if (Model%topo_drag_gwd) then
-       call topo_drag_init (fv_domain, lon_bnd, lat_bnd, IPD_Data%Sfcprop, Atm_block, Model%isc, Model%jsc, enforce_rst_cksum)
+       call topo_drag_init (fv_domain, IPD_Data%Sfcprop, Atm_block, Model, enforce_rst_cksum)
     endif
 
   end subroutine FV3GFS_restart_read
@@ -4299,6 +4302,7 @@ module FV3GFS_io_mod
     Diag(idx)%mod_name = 'gfs_phys'
     Diag(idx)%mask = "land_only"
     Diag(idx)%coarse_graining_method = MASKED_AREA_WEIGHTED
+    Diag(idx)%missing_value = missing_value
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2  => Gfs_diag(nb)%soilm(:)
@@ -7674,7 +7678,7 @@ module FV3GFS_io_mod
     Diag(idx)%desc = 'surface roughness [m]'
     Diag(idx)%unit = 'm'
     Diag(idx)%mod_name = 'gfs_sfc'
-    Diag(idx)%cnvfac = cn_one/cn_100 
+    Diag(idx)%cnvfac = cn_one/cn_100
     allocate (Diag(idx)%data(nblks))
     do nb = 1,nblks
       Diag(idx)%data(nb)%var2 => Sfcprop(nb)%zorl(:)
